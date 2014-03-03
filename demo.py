@@ -1,5 +1,5 @@
 from sync import Synchronized
-from threading import Thread, Lock
+from threading import Thread
 import time
 
 class Counter:
@@ -19,8 +19,6 @@ class Counter:
         time.sleep(.1) #time for the counts to get out of sync
         self.count = new_count
         print "Decremented to %d."%self.count
-    def __repr__(self):
-        return "Counter(%d)"%self.count
 
 class DangerousThread(Thread):
     def __init__(self, counter, function, delay):
@@ -34,8 +32,6 @@ class DangerousThread(Thread):
             self.function(self.counter)
             time.sleep(self.delay)
 
-print "Press enter to stop."
-
 counter = Counter()
 incer = DangerousThread(counter, Counter.inc, .5)
 decer = DangerousThread(counter, Counter.dec, 1)
@@ -43,6 +39,3 @@ incer.start()
 decer.start()
 
 raw_input()
-
-print counter
-print dir(counter)
